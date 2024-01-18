@@ -6,6 +6,13 @@
     <title>Document</title>
 </head>
 <body>
-    <?=$file?>
+    <header>
+    <?=$navbar?>
+    </header>
+    <?=$extra?>
+    <!--Titre-->
+    <?=$h1?>
+    <!--Texte-->
+    <?=$principal?>
 </body>
 </html>

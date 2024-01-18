@@ -1,1 +1,1 @@
-<p><?=$intro?></p>
+<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores animi perferendis modi aut distinctio, inventore quasi. Molestiae minus amet cupiditate, obcaecati quia culpa magni adipisci incidunt sunt dolor, beatae sed cum, praesentium nulla aperiam. Voluptates repellendus quibusdam maiores dicta reiciendis praesentium molestias? Dignissimos sint perspiciatis rerum. Exercitationem pariatur temporibus saepe!</p>

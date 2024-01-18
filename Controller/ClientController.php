@@ -9,7 +9,8 @@ use PDOException;
 
 class ClientController
 {
-    private $namePage = 'client';
+    private $path = 'client';
+    private $id;
     function __construct()
     {
         $action = '';
@@ -17,15 +18,19 @@ class ClientController
         extract($_GET);
 
         switch ($action) {
-            case 'client':
-                new ClientController;
+            case 'new':
+                $this->new();
+                break;
+            case 'show':
+                $this->show();
                 break;
             default:
                 $this->liste();
         }
     }
-    function liste()
+    function new()
     {
+        $titreH2='Ajouter client';
 
         //il faudra des variables qui serons récupéré dans la base de donnée pour l'acceuil titre et intro
 
@@ -34,8 +39,9 @@ class ClientController
         $sources = [
             'navbar' => '../View/navbar.html.php',
             'titre' => '../View/titre.html.php',
-            'extra' => '../View/recherche.html.php',
-            'principal' => '../View/table.html.php'
+            'recherche' => '',
+            'form'=>"../View/$this->path/form.html.php",
+            'principal' => ''
         ];
 
         //---------------------------------------------
@@ -44,28 +50,115 @@ class ClientController
 
         $field = new Manager;
 
-        $select = $request->getSelect($this->namePage);
-        $field = $request->getField($this->namePage);
+        $select = $request->getSelect($this->path);
+        $field = $request->getField($this->path);
 
 
-        $lignes=new MyFct;
-        $lignes=$lignes->Table($field,$select);
+        $table=new MyFct;
+        $table=$table->getTable($field,$select);
 
         $variables = [
-            'h1' => $this->namePage,
-            'lignes'=>$lignes
+            'h1' => $this->path,
+            'h2' => $titreH2,
+            'table'=>$table,
+            'modifier'=>'hidden',
+            'creer'=>'',
         ];
-        $file = "../View/" . ucfirst($this->namePage) . "/file.html.php";
+        $file = "../View/" . ucfirst($this->path) . "/file.html.php";
         $page=new MyFct;
-        $page->render($file,$variables, $sources);
+        $rendu=$page->getRendu($file,$variables, $sources);
+
+        echo $rendu;
+        // echo $page;
     }
-    // function render($variables, $sources)
-    // {
-    //     $file = "../View/" . ucfirst($this->namePage) . "/file.html.php";
+    function show()
+    {
+        $table=$this->path;
+        // echo 'show';
+        echo $table;
+        die;
+        $titreH2='Fiche client';
 
-    //     $variables['sources'] = $sources;
+        //il faudra des variables qui serons récupéré dans la base de donnée pour l'acceuil titre et intro
 
-    //     $page = new MyFct;
-    //     $page->scan($file, $variables);
-    // }
+        //rassemblement des fichiers sources à scaner
+
+        $sources = [
+            'navbar' => '../View/navbar.html.php',
+            'titre' => '../View/titre.html.php',
+            'recherche' => '',
+            'form'=>"../View/$this->path/form.html.php",
+            'principal' => ''
+        ];
+
+        //---------------------------------------------
+
+        $request = new Manager;
+
+        $field = new Manager;
+
+        $select = $request->getSelect($this->path,$this->id);
+        $field = $request->getField($this->path);
+
+        die;
+        $table=new MyFct;
+        $table=$table->getTable($field,$select,$table);
+
+        $variables = [
+            'h1' => $this->path,
+            'h2' => $titreH2,
+            'table'=>$table,
+            'modifier'=>'',
+            'creer'=>'hidden',
+        ];
+        $file = "../View/" . ucfirst($this->path) . "/file.html.php";
+        $page=new MyFct;
+        $rendu=$page->getRendu($file,$variables, $sources);
+
+        echo $rendu;
+        // echo $page;
+    }
+    function liste()
+    {
+        $titreH2='Liste client';
+
+        //il faudra des variables qui serons récupéré dans la base de donnée pour l'acceuil titre et intro
+
+        //rassemblement des fichiers sources à scaner
+
+        $sources = [
+            'navbar' => '../View/navbar.html.php',
+            'titre' => '../View/titre.html.php',
+            'recherche' => '../View/recherche.html.php',
+            'principal' => '../View/table.html.php',
+            'form'=>'',
+        ];
+
+        //---------------------------------------------
+
+        $request = new Manager;
+
+        $field = new Manager;
+
+
+        $select = $request->getSelect($this->path);
+        $field = $request->getField($this->path);
+
+        $table=$this->path;
+
+        $table=new MyFct;
+        $table=$table->getTable($field,$select,$table);
+
+        $variables = [
+            'h1' => $this->path,
+            'h2' => $titreH2,
+            'table'=>$table
+        ];
+        $file = "../View/" . ucfirst($this->path) . "/file.html.php";
+        $page=new MyFct;
+        $rendu=$page->getRendu($file,$variables, $sources);
+
+        echo $rendu;
+        // echo $page;
+    }
 }
